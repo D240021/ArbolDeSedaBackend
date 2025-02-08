@@ -4,7 +4,9 @@ import arboDeSeda.backend.Datos.TopicoRepositorio;
 import arboDeSeda.backend.Dominio.Topico;
 import arboDeSeda.backend.Negocios.Interfaces.ITopico;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TopicoServicio implements ITopico {
 
     @Autowired

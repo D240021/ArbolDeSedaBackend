@@ -4,12 +4,12 @@ import arboDeSeda.backend.Dominio.Usuario;
 
 import java.util.List;
 
-public interface IUsuario {
+public interface IUsuario <T extends Usuario> {
 
-    public List<Usuario> obtenerTodosUsuarios();
+    public List<T> obtenerTodosUsuarios();
 
-    public Usuario obtenerUsuarioPorId(int id);
+    public T obtenerUsuarioPorId(int id);
 
-    public boolean registrarUsuario(Usuario usuario);
+    public boolean registrarUsuario(T usuario);
 
 }

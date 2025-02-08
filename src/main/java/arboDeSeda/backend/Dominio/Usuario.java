@@ -7,8 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity
-@Table(name="Usuario")
+@MappedSuperclass
 public class Usuario {
 
     @Id
