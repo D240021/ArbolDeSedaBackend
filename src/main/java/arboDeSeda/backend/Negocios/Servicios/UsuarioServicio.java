@@ -4,9 +4,11 @@ import arboDeSeda.backend.Datos.UsuarioRepositorio;
 import arboDeSeda.backend.Dominio.Usuario;
 import arboDeSeda.backend.Negocios.Interfaces.IUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UsuarioServicio implements IUsuario {
 
     @Autowired
