@@ -2,13 +2,16 @@ package arboDeSeda.backend.Negocios.Servicios;
 
 import arboDeSeda.backend.Datos.ComentarioRepositorio;
 import arboDeSeda.backend.Datos.TopicoRepositorio;
-import arboDeSeda.backend.Datos.UsuarioRepositorio;
+import arboDeSeda.backend.Datos.PacienteRepositorio;
 import arboDeSeda.backend.Dominio.Comentario;
+import arboDeSeda.backend.Dominio.Topico;
 import arboDeSeda.backend.Negocios.Interfaces.IComentario;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ComentarioServicio implements IComentario {
@@ -20,12 +23,12 @@ public class ComentarioServicio implements IComentario {
     private final TopicoRepositorio topicoRepositorio;
 
     @Autowired
-    private final UsuarioRepositorio usuarioRepositorio;
+    private final PacienteRepositorio pacienteRepositorio;
 
-    public ComentarioServicio(ComentarioRepositorio comentarioRepositorio, TopicoRepositorio topicoRepositorio, UsuarioRepositorio usuarioRepositorio) {
+    public ComentarioServicio(ComentarioRepositorio comentarioRepositorio, TopicoRepositorio topicoRepositorio, PacienteRepositorio pacienteRepositorio) {
         this.comentarioRepositorio = comentarioRepositorio;
         this.topicoRepositorio = topicoRepositorio;
-        this.usuarioRepositorio = usuarioRepositorio;
+        this.pacienteRepositorio = pacienteRepositorio;
     }
 
     @Override
@@ -33,7 +36,7 @@ public class ComentarioServicio implements IComentario {
 
         try{
 
-            if(!this.usuarioRepositorio.existsById(comentario.getUsuario().getId()))
+            if(!this.pacienteRepositorio.existsById(comentario.getPaciente().getId()))
                 throw new Exception("Usuario no encontrado");
 
             if (!this.topicoRepositorio.existsById(comentario.getTopico().getId()))
@@ -58,7 +61,6 @@ public class ComentarioServicio implements IComentario {
                     .orElseThrow(() -> new Exception("Comentario no encontrado"));
 
             comentarioBaseDatos.setContenido(comentario.getContenido());
-            comentarioBaseDatos.setFecha(comentario.getFecha());
 
             comentarioRepositorio.save(comentarioBaseDatos);
 
@@ -66,6 +68,20 @@ public class ComentarioServicio implements IComentario {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public List<Comentario> obtenerComentariosPorTopico(int idTopico) {
+
+        try{
+            Topico topicoBuscado = this.topicoRepositorio.findById(idTopico)
+                    .orElseThrow( () -> new Exception("Topico no encontrado") );
+
+            return this.comentarioRepositorio.findByTopico(topicoBuscado);
+        }catch (Exception e){
+            return List.of();
+        }
+
     }
 
 }

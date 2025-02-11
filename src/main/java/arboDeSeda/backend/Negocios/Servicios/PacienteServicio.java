@@ -1,34 +1,34 @@
 package arboDeSeda.backend.Negocios.Servicios;
 
-import arboDeSeda.backend.Datos.UsuarioRepositorio;
-import arboDeSeda.backend.Dominio.Usuario;
-import arboDeSeda.backend.Negocios.Interfaces.IUsuario;
+import arboDeSeda.backend.Datos.PacienteRepositorio;
+import arboDeSeda.backend.Dominio.Paciente;
+import arboDeSeda.backend.Negocios.Interfaces.IPaciente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UsuarioServicio implements IUsuario {
+public class PacienteServicio implements IPaciente {
 
     @Autowired
-    private final UsuarioRepositorio usuarioRepositorio;
+    private final PacienteRepositorio pacienteRepositorio;
 
-    public UsuarioServicio(UsuarioRepositorio usuarioRepositorio) {
-        this.usuarioRepositorio = usuarioRepositorio;
+    public PacienteServicio(PacienteRepositorio pacienteRepositorio) {
+        this.pacienteRepositorio = pacienteRepositorio;
     }
 
 
     @Override
-    public List<Usuario> obtenerTodosUsuarios() {
-        return this.usuarioRepositorio.findAll();
+    public List<Paciente> obtenerTodosUsuarios() {
+        return this.pacienteRepositorio.findAll();
     }
 
     @Override
-    public Usuario obtenerUsuarioPorId(int id) {
+    public Paciente obtenerUsuarioPorId(int id) {
 
         try {
-            return this.usuarioRepositorio.findById(id)
+            return this.pacienteRepositorio.findById(id)
                     .orElseThrow( () -> new Exception("Usuario no encontrado"));
 
 
@@ -39,9 +39,9 @@ public class UsuarioServicio implements IUsuario {
     }
 
     @Override
-    public boolean registrarUsuario(Usuario usuario) {
+    public boolean registrarUsuario(Paciente paciente) {
         try {
-            usuarioRepositorio.save(usuario);
+            pacienteRepositorio.save(paciente);
             return true;
         } catch (Exception e) {
             return false;

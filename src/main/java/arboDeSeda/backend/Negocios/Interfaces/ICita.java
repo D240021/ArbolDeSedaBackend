@@ -8,5 +8,5 @@ public interface ICita {
 
     public boolean agendarCita(Cita cita);
 
-    public List<Cita> obtenerCitasPorUsuario(int idUsuario);
+    public List<Cita> obtenerCitasPorUsuario(int idPaciente);
 }

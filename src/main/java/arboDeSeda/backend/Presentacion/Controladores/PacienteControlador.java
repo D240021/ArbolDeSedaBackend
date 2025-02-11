@@ -1,45 +1,44 @@
 package arboDeSeda.backend.Presentacion.Controladores;
 
-import arboDeSeda.backend.Dominio.Usuario;
-import arboDeSeda.backend.Negocios.Servicios.UsuarioServicio;
-import arboDeSeda.backend.Presentacion.DTOs.Usuario.UsuarioDTOMapper;
-import arboDeSeda.backend.Presentacion.DTOs.Usuario.UsuarioLecturaDTO;
-import arboDeSeda.backend.Presentacion.DTOs.Usuario.UsuarioRegistroDTO;
+import arboDeSeda.backend.Dominio.Paciente;
+import arboDeSeda.backend.Negocios.Servicios.PacienteServicio;
+import arboDeSeda.backend.Presentacion.DTOs.Usuario.PacienteDTOMapper;
+import arboDeSeda.backend.Presentacion.DTOs.Usuario.PacienteLecturaDTO;
+import arboDeSeda.backend.Presentacion.DTOs.Usuario.PacienteRegistroDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.EntityResponse;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/usuario")
-public class UsuarioControlador {
+public class PacienteControlador {
 
     @Autowired
-    private final UsuarioServicio usuarioServicio;
+    private final PacienteServicio usuarioServicio;
 
-    public UsuarioControlador(UsuarioServicio usuarioServicio) {
+    public PacienteControlador(PacienteServicio usuarioServicio) {
         this.usuarioServicio = usuarioServicio;
     }
 
     @GetMapping
-    public ResponseEntity<List<UsuarioLecturaDTO>> obtenerTodosUsuarios(){
-        return ResponseEntity.ok(UsuarioDTOMapper.convertirUsuariosAUsuariosLecturaDTO(this.usuarioServicio.obtenerTodosUsuarios()));
+    public ResponseEntity<List<PacienteLecturaDTO>> obtenerTodosUsuarios(){
+        return ResponseEntity.ok(PacienteDTOMapper.convertirUsuariosAUsuariosLecturaDTO(this.usuarioServicio.obtenerTodosUsuarios()));
     }
 
     @GetMapping("/{idUsuario}")
-    public ResponseEntity<UsuarioLecturaDTO> obtenerUsuarioPorId(@PathVariable int idUsuario){
-        return ResponseEntity.ok(UsuarioDTOMapper.convertirUsuarioAUsuarioLecturaDTO(this.usuarioServicio.obtenerUsuarioPorId(idUsuario)));
+    public ResponseEntity<PacienteLecturaDTO> obtenerUsuarioPorId(@PathVariable int idUsuario){
+        return ResponseEntity.ok(PacienteDTOMapper.convertirUsuarioAUsuarioLecturaDTO(this.usuarioServicio.obtenerUsuarioPorId(idUsuario)));
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> registrarUsuario(@RequestBody UsuarioRegistroDTO usuarioRegistroDTO){
+    public ResponseEntity<Boolean> registrarUsuario(@RequestBody PacienteRegistroDTO pacienteRegistroDTO){
 
-        Usuario nuevoUsuario = UsuarioDTOMapper.convertirUsuarioRegistroDTOAUsuario(usuarioRegistroDTO);
+        Paciente nuevoPaciente = PacienteDTOMapper.convertirUsuarioRegistroDTOAUsuario(pacienteRegistroDTO);
 
         return ResponseEntity.created(null)
-                .body(this.usuarioServicio.registrarUsuario(nuevoUsuario));
+                .body(this.usuarioServicio.registrarUsuario(nuevoPaciente));
     }
 
 }

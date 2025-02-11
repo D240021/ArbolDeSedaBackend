@@ -1,5 +1,6 @@
 package arboDeSeda.backend.Dominio;
 
+import arboDeSeda.backend.Presentacion.DTOs.Cita.CitaRegistroDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,9 +19,14 @@ public class Cita {
     private LocalDate fechaHora;
 
     @OneToOne
-    private Usuario paciente;
+    private Paciente paciente;
 
     private int idMedico;
 
 
+    public Cita(CitaRegistroDTO citaRegistroDTO) {
+        this.fechaHora = citaRegistroDTO.fechaHora();
+        this.paciente.setId(citaRegistroDTO.idPaciente());
+        this.idMedico = citaRegistroDTO.idMedico();
+    }
 }

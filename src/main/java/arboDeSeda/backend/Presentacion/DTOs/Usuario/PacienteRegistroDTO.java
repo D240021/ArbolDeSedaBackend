@@ -1,6 +1,6 @@
 package arboDeSeda.backend.Presentacion.DTOs.Usuario;
 
-public record UsuarioRegistroDTO(
+public record PacienteRegistroDTO(
 
          String cedula,
          String nombre,

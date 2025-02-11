@@ -1,4 +1,12 @@
 package arboDeSeda.backend.Presentacion.DTOs.Comentario;
 
-public record ComentarioRegistroDTO() {
+import java.time.LocalDate;
+
+public record ComentarioRegistroDTO(
+
+        int idPaciente,
+        int idTopico,
+        LocalDate fechaHora,
+        String contenido
+) {
 }

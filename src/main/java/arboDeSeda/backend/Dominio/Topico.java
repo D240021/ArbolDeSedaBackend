@@ -1,5 +1,6 @@
 package arboDeSeda.backend.Dominio;
 
+import arboDeSeda.backend.Presentacion.DTOs.Topico.TopicoRegistroDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,9 +20,15 @@ public class Topico {
     private String contenido;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    @JoinColumn(name = "paciente_id", nullable = false)
+    private Paciente paciente;
 
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comentario> comentarios;
+
+    public Topico(TopicoRegistroDTO topicoRegistroDTO) {
+        this.asunto = topicoRegistroDTO.asunto();
+        this.contenido = topicoRegistroDTO.contenido();
+        this.paciente.setId(topicoRegistroDTO.idPaciente());
+    }
 }

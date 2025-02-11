@@ -1,8 +1,8 @@
 package arboDeSeda.backend.Presentacion.DTOs.Usuario;
 
-import arboDeSeda.backend.Dominio.Usuario;
+import arboDeSeda.backend.Dominio.Paciente;
 
-public record UsuarioLecturaDTO(
+public record PacienteLecturaDTO(
 
          Integer id,
          String cedula,
@@ -13,14 +13,14 @@ public record UsuarioLecturaDTO(
 
 ) {
 
-    public UsuarioLecturaDTO(Usuario usuario) {
+    public PacienteLecturaDTO(Paciente paciente) {
         this(
-                usuario.getId(),
-                usuario.getCedula(),
-                usuario.getNombre(),
-                usuario.getApellidos(),
-                usuario.getTelefono(),
-                usuario.getCorreo()
+                paciente.getId(),
+                paciente.getCedula(),
+                paciente.getNombre(),
+                paciente.getApellidos(),
+                paciente.getTelefono(),
+                paciente.getCorreo()
         );
     }
 }

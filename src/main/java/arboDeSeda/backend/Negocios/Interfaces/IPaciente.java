@@ -1,15 +1,15 @@
 package arboDeSeda.backend.Negocios.Interfaces;
 
-import arboDeSeda.backend.Dominio.Usuario;
+import arboDeSeda.backend.Dominio.Paciente;
 
 import java.util.List;
 
-public interface IUsuario {
+public interface IPaciente {
 
-    public List<Usuario> obtenerTodosUsuarios();
+    public List<Paciente> obtenerTodosUsuarios();
 
-    public Usuario obtenerUsuarioPorId(int id);
+    public Paciente obtenerUsuarioPorId(int id);
 
-    public boolean registrarUsuario(Usuario usuario);
+    public boolean registrarUsuario(Paciente paciente);
 
 }

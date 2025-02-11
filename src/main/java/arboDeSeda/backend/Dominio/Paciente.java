@@ -1,6 +1,6 @@
 package arboDeSeda.backend.Dominio;
 
-import arboDeSeda.backend.Presentacion.DTOs.Usuario.UsuarioRegistroDTO;
+import arboDeSeda.backend.Presentacion.DTOs.Usuario.PacienteRegistroDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Usuario {
+public class Paciente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,16 +25,16 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Topico> topicos;
 
-    public Usuario(){
+    public Paciente(){
 
     }
 
-    public Usuario(UsuarioRegistroDTO usuarioRegistroDTO){
-        this.cedula = usuarioRegistroDTO.cedula();
-        this.nombre = usuarioRegistroDTO.nombre();
-        this.apellidos = usuarioRegistroDTO.apellidos();
-        this.telefono = usuarioRegistroDTO.telefono();
-        this.correo = usuarioRegistroDTO.correo();
-        this.contrasenia = usuarioRegistroDTO.contrasenia();
+    public Paciente(PacienteRegistroDTO pacienteRegistroDTO){
+        this.cedula = pacienteRegistroDTO.cedula();
+        this.nombre = pacienteRegistroDTO.nombre();
+        this.apellidos = pacienteRegistroDTO.apellidos();
+        this.telefono = pacienteRegistroDTO.telefono();
+        this.correo = pacienteRegistroDTO.correo();
+        this.contrasenia = pacienteRegistroDTO.contrasenia();
     }
 }

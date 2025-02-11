@@ -1,9 +1,9 @@
 package arboDeSeda.backend.Negocios.Servicios;
 
 import arboDeSeda.backend.Datos.CitaRepositorio;
-import arboDeSeda.backend.Datos.UsuarioRepositorio;
+import arboDeSeda.backend.Datos.PacienteRepositorio;
 import arboDeSeda.backend.Dominio.Cita;
-import arboDeSeda.backend.Dominio.Usuario;
+import arboDeSeda.backend.Dominio.Paciente;
 import arboDeSeda.backend.Negocios.Interfaces.ICita;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,11 @@ public class CitaServicio implements ICita {
     private final CitaRepositorio citaRepositorio;
 
     @Autowired
-    private final UsuarioRepositorio usuarioRepositorio;
+    private final PacienteRepositorio pacienteRepositorio;
 
-    public CitaServicio(CitaRepositorio citaRepositorio, UsuarioRepositorio usuarioRepositorio) {
+    public CitaServicio(CitaRepositorio citaRepositorio, PacienteRepositorio pacienteRepositorio) {
         this.citaRepositorio = citaRepositorio;
-        this.usuarioRepositorio = usuarioRepositorio;
+        this.pacienteRepositorio = pacienteRepositorio;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class CitaServicio implements ICita {
 
         try {
 
-            if(this.usuarioRepositorio.existsById(cita.getPaciente().getId()))
+            if(this.pacienteRepositorio.existsById(cita.getPaciente().getId()))
                 throw new Exception("Paciente no encontrado");
 
             this.citaRepositorio.save(cita);
@@ -42,11 +42,11 @@ public class CitaServicio implements ICita {
     }
 
     @Override
-    public List<Cita> obtenerCitasPorUsuario(int idUsuario) {
+    public List<Cita> obtenerCitasPorUsuario(int idPaciente) {
 
         try {
 
-            Usuario paciente = this.usuarioRepositorio.findById(idUsuario)
+            Paciente paciente = this.pacienteRepositorio.findById(idPaciente)
                     .orElseThrow( () -> new Exception("Paciente no encontrado") );
 
             return this.citaRepositorio.findByPaciente(paciente);

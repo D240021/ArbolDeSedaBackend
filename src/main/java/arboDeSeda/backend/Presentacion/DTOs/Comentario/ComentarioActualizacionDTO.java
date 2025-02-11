@@ -1,4 +1,7 @@
 package arboDeSeda.backend.Presentacion.DTOs.Comentario;
 
-public record ComentarioActualizacionDTO() {
+public record ComentarioActualizacionDTO(
+
+        String contenido
+) {
 }
