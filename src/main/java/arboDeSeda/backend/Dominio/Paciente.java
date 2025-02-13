@@ -22,7 +22,7 @@ public class Paciente {
     private String correo;
     private String contrasenia;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Topico> topicos;
 
     public Paciente(){

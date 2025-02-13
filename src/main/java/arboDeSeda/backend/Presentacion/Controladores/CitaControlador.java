@@ -30,7 +30,7 @@ public class CitaControlador {
         return ResponseEntity.created(null).body(this.citaServicio.agendarCita(cita));
     }
 
-    @GetMapping("/{idPaciente")
+    @GetMapping("/{idPaciente}")
     public ResponseEntity<List<CitaLecturaDTO>> obtenerCitasPorUsuario(@PathVariable int idPaciente){
         return ResponseEntity.ok(CitaDTOMapper.convertirCitasACitasLecturaDTO(this.citaServicio.obtenerCitasPorUsuario(idPaciente)));
     }
