@@ -1,13 +1,15 @@
 package arboDeSeda.backend.Presentacion.DTOs.Topico;
 
-import arboDeSeda.backend.Dominio.Paciente;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
 public record TopicoRegistroDTO(
 
+         @NotBlank
          String asunto,
+         @NotBlank
          String contenido,
-         int idPaciente
+         @Range(min = 1)
+         int idUsuario
 ) {
 }

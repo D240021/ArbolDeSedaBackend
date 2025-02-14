@@ -8,4 +8,6 @@ import java.util.List;
 public interface ITopico {
 
     public boolean registrarTopico(Topico topico);
+
+    public List<Topico> obtenerTodosTopicos();
 }

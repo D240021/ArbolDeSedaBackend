@@ -1,7 +1,7 @@
 package arboDeSeda.backend.Infraestructura.Filtros;
 
 
-import arboDeSeda.backend.Datos.PacienteRepositorio;
+import arboDeSeda.backend.Datos.UsuarioRepositorio;
 import arboDeSeda.backend.Infraestructura.Seguridad.ServicioToken;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,13 +20,13 @@ import java.io.IOException;
 public class FiltroTokenSeguridad extends OncePerRequestFilter {
 
     @Autowired
-    private final PacienteRepositorio pacienteRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
 
     @Autowired
     private final ServicioToken servicioToken;
 
-    public FiltroTokenSeguridad(PacienteRepositorio pacienteRepositorio, ServicioToken servicioToken) {
-        this.pacienteRepositorio = pacienteRepositorio;
+    public FiltroTokenSeguridad(UsuarioRepositorio usuarioRepositorio, ServicioToken servicioToken) {
+        this.usuarioRepositorio = usuarioRepositorio;
         this.servicioToken = servicioToken;
     }
 
@@ -41,7 +41,7 @@ public class FiltroTokenSeguridad extends OncePerRequestFilter {
 
             if (username != null) {
                 // Token valido
-                var user = pacienteRepositorio.findByNombreUsuario(username);
+                var user = usuarioRepositorio.findByNombreUsuario(username);
 
                 var authentication = new UsernamePasswordAuthenticationToken(user, null,
                         user.getAuthorities());

@@ -2,7 +2,7 @@ package arboDeSeda.backend.Negocios.Servicios;
 
 import arboDeSeda.backend.Datos.ComentarioRepositorio;
 import arboDeSeda.backend.Datos.TopicoRepositorio;
-import arboDeSeda.backend.Datos.PacienteRepositorio;
+import arboDeSeda.backend.Datos.UsuarioRepositorio;
 import arboDeSeda.backend.Dominio.Comentario;
 import arboDeSeda.backend.Dominio.Topico;
 import arboDeSeda.backend.Negocios.Interfaces.IComentario;
@@ -23,12 +23,12 @@ public class ComentarioServicio implements IComentario {
     private final TopicoRepositorio topicoRepositorio;
 
     @Autowired
-    private final PacienteRepositorio pacienteRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
 
-    public ComentarioServicio(ComentarioRepositorio comentarioRepositorio, TopicoRepositorio topicoRepositorio, PacienteRepositorio pacienteRepositorio) {
+    public ComentarioServicio(ComentarioRepositorio comentarioRepositorio, TopicoRepositorio topicoRepositorio, UsuarioRepositorio usuarioRepositorio) {
         this.comentarioRepositorio = comentarioRepositorio;
         this.topicoRepositorio = topicoRepositorio;
-        this.pacienteRepositorio = pacienteRepositorio;
+        this.usuarioRepositorio = usuarioRepositorio;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ComentarioServicio implements IComentario {
 
         try{
 
-            if(!this.pacienteRepositorio.existsById(comentario.getPaciente().getId()))
+            if(!this.usuarioRepositorio.existsById(comentario.getUsuario().getId()))
                 throw new Exception("Usuario no encontrado");
 
             if (!this.topicoRepositorio.existsById(comentario.getTopico().getId()))

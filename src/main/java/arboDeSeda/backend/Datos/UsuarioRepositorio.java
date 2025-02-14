@@ -1,12 +1,10 @@
 package arboDeSeda.backend.Datos;
 
-import arboDeSeda.backend.Dominio.Paciente;
+import arboDeSeda.backend.Dominio.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.List;
-
-public interface PacienteRepositorio extends JpaRepository<Paciente,Integer> {
+public interface UsuarioRepositorio extends JpaRepository<Usuario,Integer> {
 
     public UserDetails findByNombreUsuario(String nombreUsuario);
 

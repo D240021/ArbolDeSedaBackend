@@ -1,7 +1,6 @@
 package arboDeSeda.backend.Dominio;
 
 import arboDeSeda.backend.Presentacion.DTOs.Comentario.ComentarioActualizacionDTO;
-import arboDeSeda.backend.Presentacion.DTOs.Comentario.ComentarioLecturaDTO;
 import arboDeSeda.backend.Presentacion.DTOs.Comentario.ComentarioRegistroDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,8 +18,8 @@ public class Comentario {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "paciente_id", nullable = false)
-    private Paciente paciente;
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "topico_id", nullable = false)
@@ -32,7 +31,11 @@ public class Comentario {
     public Comentario(){}
 
     public Comentario(ComentarioRegistroDTO comentarioRegistroDTO) {
-        this.paciente.setId(comentarioRegistroDTO.idPaciente());
+
+        this.usuario = new Usuario();
+        this.topico = new Topico();
+
+        this.usuario.setId(comentarioRegistroDTO.idUsuario());
         this.topico.setId(comentarioRegistroDTO.idTopico());
         this.fecha = comentarioRegistroDTO.fechaHora();
         this.contenido = comentarioRegistroDTO.contenido();

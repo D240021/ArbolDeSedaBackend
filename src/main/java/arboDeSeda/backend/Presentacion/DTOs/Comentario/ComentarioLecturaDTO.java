@@ -12,6 +12,6 @@ public record ComentarioLecturaDTO (
         String contenido
 ) {
     public ComentarioLecturaDTO(Comentario comentario) {
-        this(comentario.getId(),comentario.getPaciente().getId(),comentario.getFecha(),comentario.getContenido());
+        this(comentario.getId(),comentario.getUsuario().getId(),comentario.getFecha(),comentario.getContenido());
     }
 }

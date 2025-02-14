@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "Foro")
+@Table(name = "Topico")
 public class Topico {
 
     @Id
@@ -20,15 +20,22 @@ public class Topico {
     private String contenido;
 
     @ManyToOne
-    @JoinColumn(name = "paciente_id", nullable = false)
-    private Paciente paciente;
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comentario> comentarios;
 
+    public Topico(){
+
+    }
+
     public Topico(TopicoRegistroDTO topicoRegistroDTO) {
+
+        this.usuario = new Usuario();
+
         this.asunto = topicoRegistroDTO.asunto();
         this.contenido = topicoRegistroDTO.contenido();
-        this.paciente.setId(topicoRegistroDTO.idPaciente());
+        this.usuario.setId(topicoRegistroDTO.idUsuario());
     }
 }

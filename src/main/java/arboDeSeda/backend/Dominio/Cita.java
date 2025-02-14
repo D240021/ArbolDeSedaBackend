@@ -19,14 +19,17 @@ public class Cita {
     private LocalDate fechaHora;
 
     @OneToOne
-    private Paciente paciente;
+    private Usuario usuario;
 
     private int idMedico;
 
 
     public Cita(CitaRegistroDTO citaRegistroDTO) {
+
+        this.usuario = new Usuario();
+
         this.fechaHora = citaRegistroDTO.fechaHora();
-        this.paciente.setId(citaRegistroDTO.idPaciente());
+        this.usuario.setId(citaRegistroDTO.idPaciente());
         this.idMedico = citaRegistroDTO.idMedico();
     }
 }

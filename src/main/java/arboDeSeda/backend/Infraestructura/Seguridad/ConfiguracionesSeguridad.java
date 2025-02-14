@@ -33,9 +33,8 @@ public class ConfiguracionesSeguridad {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
-                    req.requestMatchers(HttpMethod.POST, "/login").permitAll();
-                    req.requestMatchers(HttpMethod.POST, "/login/validateToken").permitAll();
-                    req.requestMatchers(HttpMethod.POST, "/user/register").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/usuario").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/usuario/autenticar").permitAll();
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(this.filtroTokenSeguridad, UsernamePasswordAuthenticationFilter.class)

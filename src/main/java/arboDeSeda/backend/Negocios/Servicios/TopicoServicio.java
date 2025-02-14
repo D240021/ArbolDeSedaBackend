@@ -6,6 +6,8 @@ import arboDeSeda.backend.Negocios.Interfaces.ITopico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TopicoServicio implements ITopico {
 
@@ -27,4 +29,11 @@ public class TopicoServicio implements ITopico {
         }
 
     }
+
+    @Override
+    public List<Topico> obtenerTodosTopicos() {
+        return this.topicoRepositorio.findAll();
+    }
+
+
 }

@@ -1,9 +1,9 @@
 package arboDeSeda.backend.Negocios.Servicios;
 
 import arboDeSeda.backend.Datos.CitaRepositorio;
-import arboDeSeda.backend.Datos.PacienteRepositorio;
+import arboDeSeda.backend.Datos.UsuarioRepositorio;
 import arboDeSeda.backend.Dominio.Cita;
-import arboDeSeda.backend.Dominio.Paciente;
+import arboDeSeda.backend.Dominio.Usuario;
 import arboDeSeda.backend.Negocios.Interfaces.ICita;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,11 @@ public class CitaServicio implements ICita {
     private final CitaRepositorio citaRepositorio;
 
     @Autowired
-    private final PacienteRepositorio pacienteRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
 
-    public CitaServicio(CitaRepositorio citaRepositorio, PacienteRepositorio pacienteRepositorio) {
+    public CitaServicio(CitaRepositorio citaRepositorio, UsuarioRepositorio usuarioRepositorio) {
         this.citaRepositorio = citaRepositorio;
-        this.pacienteRepositorio = pacienteRepositorio;
+        this.usuarioRepositorio = usuarioRepositorio;
     }
 
     @Override
@@ -29,8 +29,8 @@ public class CitaServicio implements ICita {
 
         try {
 
-            if(this.pacienteRepositorio.existsById(cita.getPaciente().getId()))
-                throw new Exception("Paciente no encontrado");
+            if(!this.usuarioRepositorio.existsById(cita.getUsuario().getId()))
+                throw new Exception("Usuario no encontrado");
 
             this.citaRepositorio.save(cita);
 
@@ -46,10 +46,10 @@ public class CitaServicio implements ICita {
 
         try {
 
-            Paciente paciente = this.pacienteRepositorio.findById(idPaciente)
-                    .orElseThrow( () -> new Exception("Paciente no encontrado") );
+            Usuario usuario = this.usuarioRepositorio.findById(idPaciente)
+                    .orElseThrow( () -> new Exception("Usuario no encontrado") );
 
-            return this.citaRepositorio.findByPaciente(paciente);
+            return this.citaRepositorio.findByUsuario(usuario);
 
         }catch (Exception e){
             return List.of();

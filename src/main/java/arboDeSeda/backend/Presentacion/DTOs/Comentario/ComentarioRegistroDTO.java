@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public record ComentarioRegistroDTO(
 
-        int idPaciente,
+        int idUsuario,
         int idTopico,
         LocalDate fechaHora,
         String contenido
