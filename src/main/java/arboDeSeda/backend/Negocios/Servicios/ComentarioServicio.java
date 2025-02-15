@@ -5,6 +5,7 @@ import arboDeSeda.backend.Datos.TopicoRepositorio;
 import arboDeSeda.backend.Datos.UsuarioRepositorio;
 import arboDeSeda.backend.Dominio.Comentario;
 import arboDeSeda.backend.Dominio.Topico;
+import arboDeSeda.backend.Infraestructura.Excepciones.NoEncontradoExcepcion;
 import arboDeSeda.backend.Negocios.Interfaces.IComentario;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,10 @@ public class ComentarioServicio implements IComentario {
         try{
 
             if(!this.usuarioRepositorio.existsById(comentario.getUsuario().getId()))
-                throw new Exception("Usuario no encontrado");
+                throw new NoEncontradoExcepcion("Usuario no encontrado");
 
             if (!this.topicoRepositorio.existsById(comentario.getTopico().getId()))
-                throw new Exception("Topico no encontrado");
+                throw new NoEncontradoExcepcion("Topico no encontrado");
 
             this.comentarioRepositorio.save(comentario);
 
@@ -58,7 +59,7 @@ public class ComentarioServicio implements IComentario {
         try {
             Comentario comentarioBaseDatos = this.comentarioRepositorio
                     .findById(comentario.getId())
-                    .orElseThrow(() -> new Exception("Comentario no encontrado"));
+                    .orElseThrow(() -> new NoEncontradoExcepcion("Comentario no encontrado"));
 
             comentarioBaseDatos.setContenido(comentario.getContenido());
 
@@ -75,7 +76,7 @@ public class ComentarioServicio implements IComentario {
 
         try{
             Topico topicoBuscado = this.topicoRepositorio.findById(idTopico)
-                    .orElseThrow( () -> new Exception("Topico no encontrado") );
+                    .orElseThrow( () -> new NoEncontradoExcepcion("Topico no encontrado") );
 
             return this.comentarioRepositorio.findByTopico(topicoBuscado);
         }catch (Exception e){

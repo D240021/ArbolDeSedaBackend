@@ -2,6 +2,9 @@ package arboDeSeda.backend.Negocios.Servicios;
 
 import arboDeSeda.backend.Datos.UsuarioRepositorio;
 import arboDeSeda.backend.Dominio.Usuario;
+import arboDeSeda.backend.Infraestructura.Excepciones.AutenticacionExcepcion;
+import arboDeSeda.backend.Infraestructura.Excepciones.NoEncontradoExcepcion;
+import arboDeSeda.backend.Infraestructura.Excepciones.UsuarioExistenteExcepcion;
 import arboDeSeda.backend.Negocios.Interfaces.IUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +34,7 @@ public class UsuarioServicio implements IUsuario {
 
         try {
             return this.usuarioRepositorio.findById(id)
-                    .orElseThrow( () -> new Exception("Usuario no encontrado"));
+                    .orElseThrow( () -> new NoEncontradoExcepcion("Usuario no encontrado"));
 
 
         }catch (Exception e){
@@ -45,7 +48,7 @@ public class UsuarioServicio implements IUsuario {
         try {
 
             if(this.usuarioRepositorio.existsByNombreUsuario(usuario.getNombreUsuario()))
-                throw new Exception("Usuario ya registrado");
+                throw new UsuarioExistenteExcepcion("Usuario ya registrado");
 
             usuarioRepositorio.save(usuario);
             return true;
@@ -57,21 +60,18 @@ public class UsuarioServicio implements IUsuario {
 
     @Override
     public Usuario autenticarUsuario(Usuario usuario) {
-        try {
 
-            Usuario usuarioBaseDatos = this.usuarioRepositorio.findByNombreUsuario(usuario.getNombreUsuario());
+        Usuario usuarioBaseDatos = this.usuarioRepositorio.findByNombreUsuario(usuario.getNombreUsuario());
 
-            if(usuarioBaseDatos == null)
-                throw new Exception("Usuario no encontrado");
+        if(usuarioBaseDatos == null)
+            throw new NoEncontradoExcepcion("Usuario no encontrado");
 
-            if(Objects.equals(usuario.getNombreUsuario(), usuarioBaseDatos.getNombreUsuario()) && Objects.equals(usuario.getContrasenia(), usuarioBaseDatos.getContrasenia()))
-                return usuarioBaseDatos;
+        if(!Objects.equals(usuario.getNombreUsuario(), usuarioBaseDatos.getNombreUsuario()) ||
+                    !Objects.equals(usuario.getContrasenia(), usuarioBaseDatos.getContrasenia()))
+            throw new AutenticacionExcepcion("Error de autenticacion");
 
-            return null;
+        return usuarioBaseDatos;
 
-        }catch (Exception e){
-            return null;
-        }
     }
 
     @Override

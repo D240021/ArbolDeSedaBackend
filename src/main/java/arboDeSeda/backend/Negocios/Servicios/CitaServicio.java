@@ -4,6 +4,7 @@ import arboDeSeda.backend.Datos.CitaRepositorio;
 import arboDeSeda.backend.Datos.UsuarioRepositorio;
 import arboDeSeda.backend.Dominio.Cita;
 import arboDeSeda.backend.Dominio.Usuario;
+import arboDeSeda.backend.Infraestructura.Excepciones.NoEncontradoExcepcion;
 import arboDeSeda.backend.Negocios.Interfaces.ICita;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class CitaServicio implements ICita {
         try {
 
             if(!this.usuarioRepositorio.existsById(cita.getUsuario().getId()))
-                throw new Exception("Usuario no encontrado");
+                throw new NoEncontradoExcepcion("Usuario no encontrado");
 
             this.citaRepositorio.save(cita);
 
@@ -47,7 +48,7 @@ public class CitaServicio implements ICita {
         try {
 
             Usuario usuario = this.usuarioRepositorio.findById(idPaciente)
-                    .orElseThrow( () -> new Exception("Usuario no encontrado") );
+                    .orElseThrow( () -> new NoEncontradoExcepcion("Usuario no encontrado") );
 
             return this.citaRepositorio.findByUsuario(usuario);
 
