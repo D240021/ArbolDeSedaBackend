@@ -23,6 +23,7 @@ public class Cita {
 
     private int idMedico;
 
+    public Cita(){}
 
     public Cita(CitaRegistroDTO citaRegistroDTO) {
 
