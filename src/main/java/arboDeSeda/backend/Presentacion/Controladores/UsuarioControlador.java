@@ -2,11 +2,7 @@ package arboDeSeda.backend.Presentacion.Controladores;
 
 import arboDeSeda.backend.Dominio.Usuario;
 import arboDeSeda.backend.Negocios.Servicios.UsuarioServicio;
-import arboDeSeda.backend.Presentacion.DTOs.JWT.JWTDTO;
-import arboDeSeda.backend.Presentacion.DTOs.Usuario.AutenticacionDTO;
-import arboDeSeda.backend.Presentacion.DTOs.Usuario.UsuarioDTOMapper;
-import arboDeSeda.backend.Presentacion.DTOs.Usuario.UsuarioLecturaDTO;
-import arboDeSeda.backend.Presentacion.DTOs.Usuario.UsuarioRegistroDTO;
+import arboDeSeda.backend.Presentacion.DTOs.Usuario.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,15 +41,20 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/autenticar")
-    public ResponseEntity<JWTDTO> autenticarUsuario(@RequestBody @Valid AutenticacionDTO autenticacionDTO) {
+    public ResponseEntity<UsuarioLecturaDTO> autenticarUsuario(@RequestBody @Valid AutenticacionDTO autenticacionDTO) {
         Usuario credencialesUsuario = UsuarioDTOMapper.convertirAutenticacionDTOAUsuario(autenticacionDTO);
 
-        Usuario usuarioBaseDatos = this.usuarioServicio.obtenerUsuarioPorNombreUsuario(credencialesUsuario.getNombreUsuario());
-        System.out.println(usuarioBaseDatos);
-        UsuarioLecturaDTO usuarioCompleto = UsuarioDTOMapper.convertirUsuarioAUsuarioLecturaDTO(usuarioBaseDatos);
+        Usuario usuarioEncontrado = this.usuarioServicio.autenticarUsuario(credencialesUsuario);
 
-        return ResponseEntity.ok(new JWTDTO(this.usuarioServicio.obtenerJWToken(credencialesUsuario),usuarioCompleto ));
+        System.out.println(usuarioEncontrado);
 
+        return ResponseEntity.ok(UsuarioDTOMapper.convertirUsuarioAUsuarioLecturaDTO(usuarioEncontrado));
+
+    }
+
+    @PostMapping("/verificar")
+    public ResponseEntity<Boolean> existeUsuario(@RequestBody VerificacionUsuarioDTO verificacionUsuarioDTO){
+        return ResponseEntity.ok(this.usuarioServicio.existeUsuario(verificacionUsuarioDTO.nombreUsuario()));
     }
 
 }

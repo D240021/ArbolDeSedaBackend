@@ -2,16 +2,13 @@ package arboDeSeda.backend.Negocios.Servicios;
 
 import arboDeSeda.backend.Datos.UsuarioRepositorio;
 import arboDeSeda.backend.Dominio.Usuario;
-import arboDeSeda.backend.Infraestructura.Seguridad.ServicioToken;
 import arboDeSeda.backend.Negocios.Interfaces.IUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UsuarioServicio implements IUsuario {
@@ -19,19 +16,8 @@ public class UsuarioServicio implements IUsuario {
     @Autowired
     private final UsuarioRepositorio usuarioRepositorio;
 
-    @Autowired
-    private final AuthenticationManager authenticationManager;
-
-    @Value("${api.security.secret}")
-    private String apiSecret;
-
-    @Autowired
-    private final ServicioToken servicioToken;
-
-    public UsuarioServicio(UsuarioRepositorio usuarioRepositorio, AuthenticationManager authenticationManager, ServicioToken servicioToken) {
+    public UsuarioServicio(UsuarioRepositorio usuarioRepositorio) {
         this.usuarioRepositorio = usuarioRepositorio;
-        this.authenticationManager = authenticationManager;
-        this.servicioToken = servicioToken;
     }
 
 
@@ -57,6 +43,10 @@ public class UsuarioServicio implements IUsuario {
     @Override
     public boolean registrarUsuario(Usuario usuario) {
         try {
+
+            if(this.usuarioRepositorio.existsByNombreUsuario(usuario.getNombreUsuario()))
+                throw new Exception("Usuario ya registrado");
+
             usuarioRepositorio.save(usuario);
             return true;
         } catch (Exception e) {
@@ -64,32 +54,28 @@ public class UsuarioServicio implements IUsuario {
         }
     }
 
-    @Override
-    public String obtenerJWToken(Usuario usuario) {
-        Authentication authenticationToken = new UsernamePasswordAuthenticationToken(usuario.getUsername(),
-                usuario.getPassword());
-
-        Usuario authenticateUser = (Usuario) authenticationManager.authenticate(authenticationToken).getPrincipal();
-
-
-        return  servicioToken.generarTokenJWT(authenticateUser);
-    }
 
     @Override
-    public Usuario obtenerUsuarioPorNombreUsuario(String nombreUsuario) {
-
+    public Usuario autenticarUsuario(Usuario usuario) {
         try {
 
-            Usuario usuario = (Usuario) this.usuarioRepositorio.findByNombreUsuario(nombreUsuario);
+            Usuario usuarioBaseDatos = this.usuarioRepositorio.findByNombreUsuario(usuario.getNombreUsuario());
 
-            if(usuario == null)
+            if(usuarioBaseDatos == null)
                 throw new Exception("Usuario no encontrado");
 
-            return usuario;
+            if(Objects.equals(usuario.getNombreUsuario(), usuarioBaseDatos.getNombreUsuario()) && Objects.equals(usuario.getContrasenia(), usuarioBaseDatos.getContrasenia()))
+                return usuarioBaseDatos;
+
+            return null;
 
         }catch (Exception e){
             return null;
         }
+    }
 
+    @Override
+    public boolean existeUsuario(String nombreUsuario) {
+        return this.usuarioRepositorio.existsByNombreUsuario(nombreUsuario);
     }
 }

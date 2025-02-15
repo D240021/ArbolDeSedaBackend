@@ -12,8 +12,8 @@ public interface IUsuario {
 
     public boolean registrarUsuario(Usuario usuario);
 
-    public String obtenerJWToken(Usuario usuario);
+    public Usuario autenticarUsuario(Usuario usuario);
 
-    public Usuario obtenerUsuarioPorNombreUsuario(String nombreUsuario);
+    public boolean existeUsuario(String nombreUsuario);
 
 }

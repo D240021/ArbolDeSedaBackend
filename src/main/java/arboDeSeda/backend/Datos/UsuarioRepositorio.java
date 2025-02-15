@@ -2,10 +2,11 @@ package arboDeSeda.backend.Datos;
 
 import arboDeSeda.backend.Dominio.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public interface UsuarioRepositorio extends JpaRepository<Usuario,Integer> {
 
-    public UserDetails findByNombreUsuario(String nombreUsuario);
+    public Usuario findByNombreUsuario(String nombreUsuario);
+
+    public boolean existsByNombreUsuario(String nombreUsuario);
 
 }
