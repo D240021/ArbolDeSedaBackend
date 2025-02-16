@@ -2,7 +2,7 @@ package arboDeSeda.backend.Presentacion.DTOs.Usuario;
 
 import arboDeSeda.backend.Dominio.Usuario;
 
-public record UsuarioLecturaDTO(
+public record  UsuarioLecturaDTO(
 
          Integer id,
          String nombre,
