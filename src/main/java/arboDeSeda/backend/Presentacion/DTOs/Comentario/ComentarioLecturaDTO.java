@@ -1,17 +1,21 @@
 package arboDeSeda.backend.Presentacion.DTOs.Comentario;
 
 import arboDeSeda.backend.Dominio.Comentario;
+import arboDeSeda.backend.Presentacion.DTOs.Usuario.UsuarioDTOMapper;
+import arboDeSeda.backend.Presentacion.DTOs.Usuario.UsuarioLecturaDTO;
 
 import java.time.LocalDate;
 
 public record ComentarioLecturaDTO (
 
         int id,
-        int pacienteId,
+        UsuarioLecturaDTO usuarioLecturaDTO,
         LocalDate fechaHora,
         String contenido
 ) {
     public ComentarioLecturaDTO(Comentario comentario) {
-        this(comentario.getId(),comentario.getUsuario().getId(),comentario.getFecha(),comentario.getContenido());
+        this(comentario.getId(),
+                UsuarioDTOMapper.convertirUsuarioAUsuarioLecturaDTO(comentario.getUsuario()),
+                comentario.getFecha(),comentario.getContenido());
     }
 }
