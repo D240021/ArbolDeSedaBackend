@@ -2,6 +2,8 @@ package arboDeSeda.backend.Presentacion.DTOs.Topico;
 
 import arboDeSeda.backend.Dominio.Comentario;
 import arboDeSeda.backend.Dominio.Topico;
+import arboDeSeda.backend.Presentacion.DTOs.Comentario.ComentarioDTOMapper;
+import arboDeSeda.backend.Presentacion.DTOs.Comentario.ComentarioLecturaDTO;
 import arboDeSeda.backend.Presentacion.DTOs.Usuario.UsuarioDTOMapper;
 import arboDeSeda.backend.Presentacion.DTOs.Usuario.UsuarioLecturaDTO;
 
@@ -13,12 +15,14 @@ public record TopicoLecturaDTO (
         String asunto,
         String contenido,
         UsuarioLecturaDTO usuarioLecturaDTO,
-        List<Comentario> comentarios
+        List<ComentarioLecturaDTO> comentarioLecturaDTO
 
 ) {
 
     public TopicoLecturaDTO (Topico topico){
-        this(topico.getId(), topico.getAsunto(), topico.getAsunto(), UsuarioDTOMapper.convertirUsuarioAUsuarioLecturaDTO(topico.getUsuario()), topico.getComentarios());
+        this(topico.getId(), topico.getAsunto(), topico.getAsunto(),
+                UsuarioDTOMapper.convertirUsuarioAUsuarioLecturaDTO(topico.getUsuario()),
+                ComentarioDTOMapper.convertirComentariosAComentariosLecturaDTO(topico.getComentarios()));
     }
 
 }
