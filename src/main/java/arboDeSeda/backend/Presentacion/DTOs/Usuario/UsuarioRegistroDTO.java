@@ -3,7 +3,7 @@ package arboDeSeda.backend.Presentacion.DTOs.Usuario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Null;
 
-public record UsuarioRegistroDTO(
+public record  UsuarioRegistroDTO(
 
          @NotBlank
          String nombreUsuario,

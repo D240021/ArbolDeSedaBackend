@@ -21,7 +21,7 @@ public class ManejarExcepciones {
 
     @ExceptionHandler(NoEncontradoExcepcion.class)
     public ResponseEntity<MensajeErrorDTO> manejarNoEncontradoExcepcion( NoEncontradoExcepcion e ){
-        return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(new MensajeErrorDTO(e.getMessage()));
+        return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(new MensajeErrorDTO(e.getMessage()  ));
     }
 
 }

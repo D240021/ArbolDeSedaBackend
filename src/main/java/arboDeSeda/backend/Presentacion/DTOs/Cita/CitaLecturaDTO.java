@@ -4,10 +4,11 @@ import arboDeSeda.backend.Dominio.Cita;
 import arboDeSeda.backend.Dominio.Usuario;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public record CitaLecturaDTO (
 
-        LocalDate fechaHora,
+        Date fechaHora,
         Usuario usuario,
         int idMedico
 ){
