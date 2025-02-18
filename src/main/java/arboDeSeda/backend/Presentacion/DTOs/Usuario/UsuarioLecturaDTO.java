@@ -5,6 +5,7 @@ import arboDeSeda.backend.Dominio.Usuario;
 public record  UsuarioLecturaDTO(
 
          Integer id,
+         String nombreUsuario,
          String nombre,
          String apellidos,
          String telefono,
@@ -18,6 +19,7 @@ public record  UsuarioLecturaDTO(
     public UsuarioLecturaDTO(Usuario usuario) {
         this(
                 usuario.getId(),
+                usuario.getNombreUsuario(),
                 usuario.getNombre(),
                 usuario.getApellidos(),
                 usuario.getTelefono(),
