@@ -20,7 +20,7 @@ public record TopicoLecturaDTO (
 ) {
 
     public TopicoLecturaDTO (Topico topico){
-        this(topico.getId(), topico.getAsunto(), topico.getAsunto(),
+        this(topico.getId(), topico.getAsunto(), topico.getContenido(),
                  UsuarioDTOMapper.convertirUsuarioAUsuarioLecturaDTO(topico.getUsuario()),
                 ComentarioDTOMapper.convertirComentariosAComentariosLecturaDTO(topico.getComentarios()));
     }

@@ -26,7 +26,6 @@ public class TopicoControlador {
     @PostMapping
     public ResponseEntity<Boolean> registrarTopico(@RequestBody @Valid TopicoRegistroDTO topicoRegistroDTO){
 
-        System.out.println(topicoRegistroDTO);
         Topico topico = TopicoDTOMapper.convertirTopicoRegistroDTOATopico(topicoRegistroDTO);
 
         return ResponseEntity.created(null).body(this.topicoServicio.registrarTopico(topico));
